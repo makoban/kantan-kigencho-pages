@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>かんたん期限帳 | 車検・保険・保証書・契約更新をiPhoneでまとめて管理</title>
+  <meta name="description" content="かんたん期限帳は、車検、保険、保証書、契約更新、学校提出物、家電メンテナンスなどの忘れると困る期限をiPhone内だけで管理する期限管理アプリです。アカウント不要、サーバー不要、写真添付と通知で大切な更新を見逃しにくくします。">
+  <link rel="canonical" href="https://kantan-kigencho.bantex.jp/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="かんたん期限帳">
+  <meta property="og:title" content="かんたん期限帳 | 忘れると困る期限をiPhoneでまとめて管理">
+  <meta property="og:description" content="車検、保険、保証書、契約更新、学校提出物、家電メンテナンスをiPhone内だけで管理。写真添付と通知で、うっかり忘れを減らします。">
+  <meta property="og:url" content="https://kantan-kigencho.bantex.jp/">
+  <meta property="og:image" content="https://kantan-kigencho.bantex.jp/assets/generated/hero-deadline-desk.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/app/app-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Noto+Sans+JP:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #102226;
+      --muted: #52656a;
+      --paper: #ffffff;
+      --base: #f3f8f5;
+      --mist: #e3eee9;
+      --line: #d2e2dc;
+      --green: #126d4f;
+      --green-2: #1c8c67;
+      --blue: #255e91;
+      --yellow: #f4bc37;
+      --red: #d95549;
+      --shadow: 0 20px 56px rgba(16, 34, 38, 0.15);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans JP", "BIZ UDPGothic", -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "YuGothic", sans-serif;
+      color: var(--ink);
+      background: var(--base);
+      line-height: 1.78;
+      letter-spacing: 0;
+    }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+    h1, h2, h3 {
+      margin: 0;
+      line-height: 1.16;
+      letter-spacing: 0;
+      line-break: strict;
+      text-wrap: balance;
+    }
+    p, li {
+      line-break: strict;
+      text-wrap: pretty;
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+    .wrap {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+    .keep {
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .hero h1 .keep {
+      display: block;
+      white-space: nowrap;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(243, 248, 245, 0.9);
+      border-bottom: 1px solid rgba(18, 109, 79, 0.14);
+      backdrop-filter: blur(18px);
+    }
+    .nav {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 19px;
+    }
+    .brand img {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      box-shadow: 0 8px 18px rgba(18, 109, 79, 0.22);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .nav-links a { text-decoration: none; }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 0 20px;
+      color: #fff;
+      background: var(--green);
+      border: 1px solid var(--green);
+      border-radius: 999px;
+      font-weight: 900;
+      text-decoration: none;
+      box-shadow: 0 12px 26px rgba(18, 109, 79, 0.22);
+    }
+    .cta.secondary {
+      color: var(--green);
+      background: #fff;
+      box-shadow: none;
+    }
+    .hero {
+      position: relative;
+      min-height: 680px;
+      display: grid;
+      align-items: center;
+      isolation: isolate;
+      overflow: hidden;
+      background: #dbe9e2;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(90deg, rgba(10, 26, 31, 0.9) 0%, rgba(10, 26, 31, 0.78) 36%, rgba(10, 26, 31, 0.45) 58%, rgba(10, 26, 31, 0.12) 84%, rgba(10, 26, 31, 0) 100%),
+        url("assets/generated/hero-deadline-desk.png");
+      background-position: center, center;
+      background-size: cover, cover;
+      background-repeat: no-repeat;
+      z-index: -2;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 130px;
+      background: linear-gradient(180deg, rgba(243, 248, 245, 0), var(--base));
+      z-index: -1;
+    }
+    .hero-copy {
+      width: min(720px, 100%);
+      padding: 64px 0 112px;
+      color: #fff;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 8px 12px;
+      color: #dff7ed;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    h1 {
+      font-size: 48px;
+      font-weight: 900;
+      max-width: 700px;
+    }
+    .hero-lead {
+      max-width: 640px;
+      margin: 24px 0 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .hero-note {
+      margin-top: 16px;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .section {
+      padding: 86px 0;
+    }
+    .section.alt { background: #fff; }
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(260px, 0.55fr);
+      gap: 38px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+    .section-kicker {
+      margin: 0 0 12px;
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 900;
+    }
+    h2 {
+      font-size: 36px;
+      font-weight: 900;
+    }
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .problem-grid,
+    .feature-grid,
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .tile,
+    .step,
+    .price-panel,
+    .faq-item {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(16, 34, 38, 0.06);
+    }
+    .tile {
+      padding: 22px;
+      min-height: 185px;
+    }
+    .tile-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--green);
+      font-weight: 900;
+    }
+    .tile:nth-child(2) .tile-icon { background: var(--blue); }
+    .tile:nth-child(3) .tile-icon { background: var(--red); }
+    .tile h3,
+    .step h3,
+    .price-panel h3,
+    .faq-item h3 {
+      font-size: 20px;
+      font-weight: 900;
+    }
+    .tile p,
+    .step p,
+    .price-panel p,
+    .faq-item p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .showcase {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 390px);
+      gap: 34px;
+      align-items: center;
+    }
+    .scene {
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      background: #fff;
+    }
+    .scene img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+    .phone {
+      width: min(330px, 100%);
+      margin: 0 auto;
+      padding: 14px;
+      border-radius: 42px;
+      background: #101820;
+      box-shadow: 0 30px 70px rgba(16, 34, 38, 0.24);
+    }
+    .phone-screen {
+      min-height: 640px;
+      padding: 28px 18px;
+      overflow: hidden;
+      border-radius: 32px;
+      background: #f7f8f7;
+    }
+    .phone-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 900;
+    }
+    .app-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .app-title img {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+    }
+    .app-title strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .stat {
+      padding: 12px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid #e1e8e4;
+    }
+    .stat b {
+      display: block;
+      font-size: 24px;
+      line-height: 1;
+    }
+    .stat span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .deadline-list {
+      display: grid;
+      gap: 10px;
+    }
+    .deadline-item {
+      display: grid;
+      grid-template-columns: 38px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid #e1e8e4;
+    }
+    .dot {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--green);
+      font-weight: 900;
+    }
+    .deadline-item:nth-child(2) .dot { background: var(--blue); }
+    .deadline-item:nth-child(3) .dot { background: var(--yellow); color: var(--ink); }
+    .deadline-item strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.3;
+    }
+    .deadline-item small {
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .badge {
+      padding: 5px 8px;
+      border-radius: 999px;
+      color: var(--green);
+      background: #e1f2ea;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .badge.warn {
+      color: #aa4d08;
+      background: #fff2cf;
+    }
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .step {
+      padding: 20px;
+      min-height: 210px;
+    }
+    .step-number {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 18px;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--green);
+      font-weight: 900;
+    }
+    .feature-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: stretch;
+    }
+    .feature-image {
+      min-height: 360px;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    .feature-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .feature-list {
+      display: grid;
+      gap: 12px;
+    }
+    .feature-list .tile {
+      min-height: auto;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .feature-list .tile-icon { margin: 0; }
+    .price-panel {
+      padding: 24px;
+    }
+    .price {
+      margin: 14px 0 10px;
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .price small {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .price-panel ul {
+      margin: 18px 0 0;
+      padding-left: 1.2em;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .faq-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .faq-item {
+      padding: 22px;
+    }
+    .final {
+      color: #fff;
+      background: #102226;
+    }
+    .final .section-head p,
+    .final .section-kicker {
+      color: rgba(255, 255, 255, 0.78);
+    }
+    .final .cta.secondary {
+      color: #fff;
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.34);
+    }
+    footer {
+      padding: 28px 0;
+      color: var(--muted);
+      background: #fff;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links a:not(.cta) { display: none; }
+      .hero { min-height: auto; }
+      .hero::before {
+        background-image:
+          linear-gradient(180deg, rgba(10, 26, 31, 0.88) 0%, rgba(10, 26, 31, 0.65) 48%, rgba(10, 26, 31, 0.22) 100%),
+          url("assets/generated/hero-deadline-desk.png");
+        background-position: center, 62% center;
+      }
+      .hero-copy { padding: 58px 0 260px; }
+      h1 { font-size: 38px; }
+      .section-head,
+      .showcase,
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+      .problem-grid,
+      .pricing-grid,
+      .workflow,
+      .faq-list {
+        grid-template-columns: 1fr 1fr;
+      }
+      .phone-screen { min-height: 600px; }
+    }
+
+    @media (max-width: 560px) {
+      .wrap { width: min(100% - 28px, 1120px); }
+      .brand span { font-size: 16px; }
+      .brand img { width: 38px; height: 38px; }
+      .nav { min-height: 64px; }
+      .nav-links .cta {
+        min-height: 40px;
+        padding: 0 12px;
+        font-size: 13px;
+      }
+      .keep {
+        display: inline;
+        white-space: normal;
+      }
+      .hero h1 .keep {
+        display: block;
+        white-space: nowrap;
+      }
+      .hero-copy { padding: 40px 0 110px; }
+      h1 { font-size: 33px; }
+      h2 { font-size: 28px; }
+      .hero-lead { font-size: 15px; }
+      .section { padding: 64px 0; }
+      .problem-grid,
+      .pricing-grid,
+      .workflow,
+      .faq-list {
+        grid-template-columns: 1fr;
+      }
+      .tile,
+      .step,
+      .price-panel,
+      .faq-item {
+        padding: 18px;
+      }
+      .feature-list .tile {
+        grid-template-columns: 42px 1fr;
+      }
+      .phone {
+        width: min(310px, 100%);
+        border-radius: 36px;
+      }
+      .phone-screen {
+        min-height: 560px;
+        border-radius: 28px;
+      }
+      .deadline-item {
+        grid-template-columns: 34px 1fr;
+      }
+      .deadline-item .badge {
+        grid-column: 2;
+        justify-self: start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="かんたん期限帳 トップ">
+        <img src="assets/app/app-icon.png" alt="かんたん期限帳のアプリアイコン">
+        <span>かんたん期限帳</span>
+      </a>
+      <nav class="nav-links" aria-label="ページ内メニュー">
+        <a href="#features">できること</a>
+        <a href="#flow">使い方</a>
+        <a href="#pricing">料金案</a>
+        <a class="cta" href="#waitlist">公開状況を見る</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-copy">
+        <p class="eyebrow">アカウント不要・iPhone内だけで管理</p>
+        <h1>
+          <span class="keep">車検も、保険も、</span>
+          <span class="keep">保証期限も。</span>
+          <span class="keep">忘れる前に一冊へ。</span>
+        </h1>
+        <p class="hero-lead">かんたん期限帳は、車検、免許、保険、保証書、契約更新、学校提出物、家電メンテナンスなどの期限をまとめて管理するiPhoneアプリです。写真を添えて残し、必要な日に通知できます。</p>
+        <div class="hero-actions">
+          <a class="cta" href="#features">機能を見る</a>
+          <a class="cta secondary" href="#waitlist">公開準備状況を見る</a>
+        </div>
+        <p class="hero-note">App Store公開準備中。初期版は端末内保存と買い切りProを想定しています。</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">PROBLEM</p>
+            <h2>期限は、忘れた時だけ急に高くつく。</h2>
+          </div>
+          <p>紙、メール、LINE、冷蔵庫のメモ、家族の記憶。大切な更新ほど置き場所が分かれて、必要な日に見つからなくなります。</p>
+        </div>
+        <div class="problem-grid">
+          <article class="tile">
+            <div class="tile-icon">車</div>
+            <h3>車検・免許・保険</h3>
+            <p>通知ハガキや保険証券を写真で残し、更新日と通知日を一緒に管理できます。</p>
+          </article>
+          <article class="tile">
+            <div class="tile-icon">家</div>
+            <h3>保証書・家電メンテ</h3>
+            <p>保証期限、フィルター交換、点検日を家電ごとにまとめて、探す手間を減らします。</p>
+          </article>
+          <article class="tile">
+            <div class="tile-icon">申</div>
+            <h3>提出物・契約更新</h3>
+            <p>学校提出物、補助金、契約更新、サブスク見直しなど、日付で動く用事を逃しにくくします。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="features">
+      <div class="wrap showcase">
+        <div>
+          <p class="section-kicker">APP</p>
+          <h2>必要な情報だけを、迷わず登録。</h2>
+          <p>期限名、カテゴリ、期限日、通知日、重要度、メモ、写真。毎日使うアプリではなく、必要な時にすぐ思い出せる実用品として設計しています。</p>
+          <div class="hero-actions">
+            <a class="cta" href="#flow">使い方を見る</a>
+          </div>
+        </div>
+        <div class="phone" aria-label="かんたん期限帳の画面イメージ">
+          <div class="phone-screen">
+            <div class="phone-top">
+              <span>11:50</span>
+              <span>期限帳</span>
+            </div>
+            <div class="app-title">
+              <img src="assets/app/app-icon.png" alt="">
+              <strong>次に忘れてはいけないもの</strong>
+            </div>
+            <div class="stat-grid">
+              <div class="stat"><b>1</b><span>期限切れ</span></div>
+              <div class="stat"><b>3</b><span>7日以内</span></div>
+              <div class="stat"><b>12</b><span>未完了</span></div>
+              <div class="stat"><b>8</b><span>完了</span></div>
+            </div>
+            <div class="deadline-list">
+              <div class="deadline-item">
+                <div class="dot">車</div>
+                <div><strong>車検</strong><small>車・免許 2026/06/17</small></div>
+                <span class="badge">あと30日</span>
+              </div>
+              <div class="deadline-item">
+                <div class="dot">保</div>
+                <div><strong>火災保険の更新</strong><small>契約・保険 2026/06/25</small></div>
+                <span class="badge warn">重要</span>
+              </div>
+              <div class="deadline-item">
+                <div class="dot">家</div>
+                <div><strong>浄水器フィルター交換</strong><small>家・家電 2026/07/01</small></div>
+                <span class="badge">通知あり</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="flow">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">FLOW</p>
+            <h2>紙を見つけた時に、30秒で登録。</h2>
+          </div>
+          <p>あとで整理しようとすると忘れます。届いた瞬間、見つけた瞬間にiPhoneで残す流れを前提にしています。</p>
+        </div>
+        <figure class="scene">
+          <img src="assets/generated/workflow-organize.png" alt="散らばった更新書類をiPhoneの期限管理に整理する利用シーン">
+        </figure>
+        <div class="workflow" style="margin-top: 18px;">
+          <article class="step">
+            <span class="step-number">1</span>
+            <h3>期限名を入れる</h3>
+            <p>車検、保険更新、保証期限など、あとで検索しやすい名前で登録します。</p>
+          </article>
+          <article class="step">
+            <span class="step-number">2</span>
+            <h3>カテゴリを選ぶ</h3>
+            <p>車、契約、家電、通院、学校、仕事など、生活に近い単位で分けられます。</p>
+          </article>
+          <article class="step">
+            <span class="step-number">3</span>
+            <h3>写真を添える</h3>
+            <p>保証書、ハガキ、契約書の表紙を写真で残して、必要な時にすぐ確認できます。</p>
+          </article>
+          <article class="step">
+            <span class="step-number">4</span>
+            <h3>通知で思い出す</h3>
+            <p>当日、前日、7日前など、行動できるタイミングで通知する設計です。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap feature-grid">
+        <figure class="feature-image">
+          <img src="assets/generated/result-calm-control.png" alt="重要な期限を整理して落ち着いて確認できる家庭と仕事の利用シーン">
+        </figure>
+        <div class="feature-list">
+          <article class="tile">
+            <div class="tile-icon">端</div>
+            <div>
+              <h3>端末内保存</h3>
+              <p>アカウント登録やクラウド同期を前提にせず、まずはiPhone内で完結します。</p>
+            </div>
+          </article>
+          <article class="tile">
+            <div class="tile-icon">写</div>
+            <div>
+              <h3>写真つき記録</h3>
+              <p>期限だけでなく、書類そのものの見た目も一緒に残せます。</p>
+            </div>
+          </article>
+          <article class="tile">
+            <div class="tile-icon">検</div>
+            <div>
+              <h3>検索と絞り込み</h3>
+              <p>期限切れ、7日以内、完了、カテゴリ別で、今日見るべきものが分かります。</p>
+            </div>
+          </article>
+          <article class="tile">
+            <div class="tile-icon">共</div>
+            <div>
+              <h3>CSV共有</h3>
+              <p>期限一覧を共有できるので、家族や仕事の控えにも使いやすくします。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">PLAN</p>
+            <h2>小さく試せて、必要なら買い切り。</h2>
+          </div>
+          <p>まだ公開前の初期設計です。サーバー費をかけず、月額よりも分かりやすい価格に寄せます。</p>
+        </div>
+        <div class="pricing-grid">
+          <article class="price-panel">
+            <h3>無料版</h3>
+            <div class="price">0円</div>
+            <p>まずは少ない件数で、車検や保証期限の管理を試せる想定です。</p>
+            <ul>
+              <li>期限登録の基本機能</li>
+              <li>通知と写真添付</li>
+              <li>件数制限あり</li>
+            </ul>
+          </article>
+          <article class="price-panel">
+            <h3>Pro買い切り案</h3>
+            <div class="price">300〜600円 <small>予定</small></div>
+            <p>登録件数を増やし、家族や仕事の期限もまとめて管理できる方向です。</p>
+            <ul>
+              <li>登録件数の拡張</li>
+              <li>CSV共有</li>
+              <li>広告なしのシンプル運用</li>
+            </ul>
+          </article>
+          <article class="price-panel">
+            <h3>公開状況</h3>
+            <div class="price">準備中</div>
+            <p>初期MVPは作成済みです。App Store公開に向けて、アイコン、スクリーンショット、課金設定を調整します。</p>
+            <ul>
+              <li>iPhone専用予定</li>
+              <li>サーバー不要</li>
+              <li>日本語UI</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">FAQ</p>
+            <h2>よくある質問</h2>
+          </div>
+          <p>公開前の仕様は変わる可能性がありますが、基本方針は「かんたん」「端末内」「忘れにくい」です。</p>
+        </div>
+        <div class="faq-list">
+          <article class="faq-item">
+            <h3>家族で共有できますか？</h3>
+            <p>初期版はiPhone内保存を優先します。家族共有は、CSV共有や将来のエクスポート機能から検討します。</p>
+          </article>
+          <article class="faq-item">
+            <h3>クラウドに書類が送られますか？</h3>
+            <p>初期方針ではサーバーを使わず、写真やメモは端末内に保存します。</p>
+          </article>
+          <article class="faq-item">
+            <h3>どんな期限に向いていますか？</h3>
+            <p>車検、免許、保険、保証書、家電交換、通院、学校提出物、契約更新、サブスク見直しに向いています。</p>
+          </article>
+          <article class="faq-item">
+            <h3>通知は使えますか？</h3>
+            <p>はい。期限とは別に通知日時を設定できるので、行動できる日を選んで思い出せます。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final" id="waitlist">
+      <div class="wrap section-head" style="margin-bottom: 0;">
+        <div>
+          <p class="section-kicker">NEXT</p>
+          <h2>App Store公開に向けて準備中です。</h2>
+        </div>
+        <div>
+          <p>まずはMVPの動作確認が済んでいます。次に、提出用アイコン、App Storeスクリーンショット、買い切りPro設定、公開後のURL反映を進めます。</p>
+          <div class="hero-actions">
+            <a class="cta" href="#top">ページ上部へ戻る</a>
+            <a class="cta secondary" href="https://bantex.jp/">BANTEXを見る</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">© BANTEX. かんたん期限帳はApp Store公開準備中のiPhoneアプリです。</div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kantan-kigencho.bantex.jp/sitemap.xml
+
